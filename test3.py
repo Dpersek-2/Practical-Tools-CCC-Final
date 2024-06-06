@@ -143,43 +143,43 @@ elif sheet_selection == 'EREM':
 
 # Get unique values for dropdowns based on selected sheet
 if sheet_selection == 'Excelta':
-    sizes = ['None'] + sorted(df['Size'].dropna().unique().tolist())
-    cuts = ['None'] + sorted(df['Cut'].dropna().unique().tolist())
-    wires = ['None'] + sorted(df['Wire'].dropna().unique().tolist())
+    head_shapes = ['None'] + sorted(df['Size'].dropna().unique().tolist())
+    types_of_cut = ['None'] + sorted(df['Cut'].dropna().unique().tolist())
+    material_strengths = ['None'] + sorted(df['Wire'].dropna().unique().tolist())
 
     st.sidebar.subheader('Filter by Attributes')
     # User selections
-    selected_size = st.sidebar.selectbox('Select Size', sizes, index=0)
-    selected_cut = st.sidebar.selectbox('Select Cut', cuts, index=0)
-    selected_wire = st.sidebar.selectbox('Select Wire', wires, index=0)
+    selected_head_shape = st.sidebar.selectbox('Select Head Shape', head_shapes, index=0)
+    selected_type_of_cut = st.sidebar.selectbox('Select Type of Cut', types_of_cut, index=0)
+    selected_material_strength = st.sidebar.selectbox('Select Material Strength', material_strengths, index=0)
 elif sheet_selection == 'ideal-tek':
-    types = ['None'] + sorted(df['Type'].dropna().unique().tolist())
+    cutter_hardness = ['None'] + sorted(df['Type'].dropna().unique().tolist())
     head_shapes = ['None'] + sorted(df['Head_Shape'].dropna().unique().tolist())
     head_sizes = ['None'] + sorted(df['Head_Size'].dropna().unique().tolist())
-    cutting_edges = ['None'] + sorted(df['Cutting_Edge'].dropna().unique().tolist())
+    types_of_cut = ['None'] + sorted(df['Cutting_Edge'].dropna().unique().tolist())
 
     st.sidebar.subheader('Filter by Attributes')
     # User selections
-    selected_type = st.sidebar.selectbox('Select Type', types, index=0)
+    selected_cutter_hardness = st.sidebar.selectbox('Select Cutter Hardness', cutter_hardness, index=0)
     selected_head_shape = st.sidebar.selectbox('Select Head Shape', head_shapes, index=0)
     selected_head_size = st.sidebar.selectbox('Select Head Size', head_sizes, index=0)
-    selected_cutting_edge = st.sidebar.selectbox('Select Cutting Edge', cutting_edges, index=0)
+    selected_type_of_cut = st.sidebar.selectbox('Select Type of Cut', types_of_cut, index=0)
 elif sheet_selection == 'Swanstrom':
-    cuts = ['None'] + sorted(df['Cut'].dropna().unique().tolist())
-    types_of_cut = ['None'] + sorted(df['Type_of_Cut'].dropna().unique().tolist())
+    types_of_cut = ['None'] + sorted(df['Cut'].dropna().unique().tolist())
+    material_strengths = ['None'] + sorted(df['Type_of_Cut'].dropna().unique().tolist())
 
     st.sidebar.subheader('Filter by Attributes')
     # User selections
-    selected_cut = st.sidebar.selectbox('Select Cut', cuts, index=0)
     selected_type_of_cut = st.sidebar.selectbox('Select Type of Cut', types_of_cut, index=0)
+    selected_material_strength = st.sidebar.selectbox('Select Material Strength', material_strengths, index=0)
 elif sheet_selection == 'EREM':
     series_of_cutters = ['None'] + sorted(df['Series_of_Cutter'].dropna().unique().tolist())
-    cut_types = ['None'] + sorted(df['Cut_Type'].dropna().unique().tolist())
+    types_of_cut = ['None'] + sorted(df['Cut_Type'].dropna().unique().tolist())
 
     st.sidebar.subheader('Filter by Attributes')
     # User selections
     selected_series_of_cutter = st.sidebar.selectbox('Select Series of Cutter', series_of_cutters, index=0)
-    selected_cut_type = st.sidebar.selectbox('Select Cut Type', cut_types, index=0)
+    selected_type_of_cut = st.sidebar.selectbox('Select Type of Cut', types_of_cut, index=0)
 
 # Option to enter part number directly
 st.sidebar.subheader('Direct Part Search')
@@ -227,31 +227,31 @@ filtered_df = df.copy()
 
 # Apply filters only if user has entered values
 if sheet_selection == 'Excelta':
-    if selected_size != 'None':
-        filtered_df = filtered_df[filtered_df['Size'] == selected_size]
-    if selected_cut != 'None':
-        filtered_df = filtered_df[filtered_df['Cut'] == selected_cut]
-    if selected_wire != 'None':
-        filtered_df = filtered_df[filtered_df['Wire'] == selected_wire]
+    if selected_head_shape != 'None':
+        filtered_df = filtered_df[filtered_df['Size'] == selected_head_shape]
+    if selected_type_of_cut != 'None':
+        filtered_df = filtered_df[filtered_df['Cut'] == selected_type_of_cut]
+    if selected_material_strength != 'None':
+        filtered_df = filtered_df[filtered_df['Wire'] == selected_material_strength]
 elif sheet_selection == 'ideal-tek':
-    if selected_type != 'None':
-        filtered_df = filtered_df[filtered_df['Type'] == selected_type]
+    if selected_cutter_hardness != 'None':
+        filtered_df = filtered_df[filtered_df['Type'] == selected_cutter_hardness]
     if selected_head_shape != 'None':
         filtered_df = filtered_df[filtered_df['Head_Shape'] == selected_head_shape]
     if selected_head_size != 'None':
         filtered_df = filtered_df[filtered_df['Head_Size'] == selected_head_size]
-    if selected_cutting_edge != 'None':
-        filtered_df = filtered_df[filtered_df['Cutting_Edge'] == selected_cutting_edge]
-elif sheet_selection == 'Swanstrom':
-    if selected_cut != 'None':
-        filtered_df = filtered_df[filtered_df['Cut'] == selected_cut]
     if selected_type_of_cut != 'None':
-        filtered_df = filtered_df[filtered_df['Type_of_Cut'] == selected_type_of_cut]
+        filtered_df = filtered_df[filtered_df['Cutting_Edge'] == selected_type_of_cut]
+elif sheet_selection == 'Swanstrom':
+    if selected_type_of_cut != 'None':
+        filtered_df = filtered_df[filtered_df['Cut'] == selected_type_of_cut]
+    if selected_material_strength != 'None':
+        filtered_df = filtered_df[filtered_df['Type_of_Cut'] == selected_material_strength]
 elif sheet_selection == 'EREM':
     if selected_series_of_cutter != 'None':
         filtered_df = filtered_df[filtered_df['Series_of_Cutter'] == selected_series_of_cutter]
-    if selected_cut_type != 'None':
-        filtered_df = filtered_df[filtered_df['Cut_Type'] == selected_cut_type]
+    if selected_type_of_cut != 'None':
+        filtered_df = filtered_df[filtered_df['Cut_Type'] == selected_type_of_cut]
 
 if part_number_input:
     filtered_df = filtered_df[filtered_df[part_number_column] == part_number_input]
